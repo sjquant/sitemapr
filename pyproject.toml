@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "sitemapr"
+version = "0.1.0"
+description = "sitemapr is a library that generates sitemaps for SPA websites by reading site structures defined in YAML or JSON."
+authors = ["sjquant <seonujang92@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.2.2"
+pyright = "^1.1.351"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+fix = true
+exclude = [
+    '*.pyi',
+    "site-packages",
+    ".mypy_cache",
+    ".ruff_cache",
+]
+target-version = "py311"
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+]
+
+[tool.pyright]
+include = ["src"]
+exclude = ["**/node_modules",
+    "**/__pycache__",
+    "src/experimental",
+    "src/typestubs"
+]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
