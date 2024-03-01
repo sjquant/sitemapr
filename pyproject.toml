@@ -49,6 +49,3 @@ exclude = ["**/node_modules",
 ]
 pythonVersion = "3.11"
 typeCheckingMode = "strict"
-
-[tool.poetry.scripts]
-sitemapr = "sitemapr.cli:app"
