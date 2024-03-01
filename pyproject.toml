@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "sitemapr"
 version = "0.1.0"
-description = "sitemapr is a library that generates sitemaps for SPA websites by reading site structures defined in YAML or JSON."
+description = "sitemapr is a library that generates sitemaps for SPA websites with declaritve configuration in Python."
 authors = ["sjquant <seonujang92@gmail.com>"]
 license = "MIT"
 readme = "README.md"
