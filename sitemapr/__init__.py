@@ -1,3 +1,4 @@
-from .core import Page, Param, SiteMapr
+from .core import SiteMapr
+from .models import Page, Param, SiteMapUrl
 
-__all__ = ["SiteMapr", "Page", "Param"]
+__all__ = ["SiteMapr", "Page", "Param", "SiteMapUrl"]

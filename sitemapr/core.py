@@ -1,21 +1,7 @@
-from typing import Literal
+from itertools import product
+from urllib.parse import urlencode
 
-from pydantic import BaseModel
-
-Source = Literal["sql", "values"]
-
-
-class Param(BaseModel):
-    name: str
-    source: Source = "values"
-    query: str | None = None
-    values: list[str] | None = None
-
-
-class Page(BaseModel):
-    path: str
-    query_params: list[Param] | None = None
-    path_params: list[Param] | None = None
+from sitemapr.models import Page, Param, SiteMapUrl
 
 
 class SiteMapr:
@@ -23,11 +9,40 @@ class SiteMapr:
         self._base_url = base_url
         self._pages = pages
 
-    def generate(
-        self,
-        *,
-        outdir: str = ".",
-        filename: str = "sitemap.xml",
-        limit_per_file: int = 50000
-    ):
-        print("Generating sitemap...")
+    def generate(self) -> list[SiteMapUrl]:
+        urls: list[SiteMapUrl] = []
+        for page in self._pages:
+            page_urls = self._generate_page_urls(page)
+            urls.extend(page_urls)
+        return urls
+
+    def _generate_page_urls(self, page: Page) -> list[SiteMapUrl]:
+        urls: list[SiteMapUrl] = []
+        query_param_combinations = self._get_param_combinations(page.query_params)
+        path_param_combinations = self._get_param_combinations(page.path_params)
+        for query_params, path_params in product(
+            query_param_combinations, path_param_combinations
+        ):
+            path = page.path.format(**path_params)
+            query_string = urlencode(query_params)
+            loc = (
+                f"{self._base_url}{path}?{query_string}"
+                if query_string
+                else f"{self._base_url}{path}"
+            )
+            urls.append(SiteMapUrl(loc=loc))
+        return urls
+
+    def _get_param_combinations(
+        self, params: list[Param] | None
+    ) -> list[dict[str, str]]:
+        if not params:
+            return [{}]
+
+        combinations: list[dict[str, str]] = []
+        for values in product(*[param.values for param in params]):
+            combination = {
+                param.name: value for param, value in zip(params, values, strict=False)
+            }
+            combinations.append(combination)
+        return combinations
