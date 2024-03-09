@@ -1,3 +1,4 @@
+from collections.abc import Iterator
 from itertools import product
 from urllib.parse import urlencode
 
@@ -9,17 +10,15 @@ class SiteMapr:
         self._base_url = base_url
         self._pages = pages
 
-    def generate(self) -> list[SiteMapUrl]:
-        urls: list[SiteMapUrl] = []
+    def iter_urls(self) -> Iterator[SiteMapUrl]:
         for page in self._pages:
-            page_urls = self._generate_page_urls(page)
-            urls.extend(page_urls)
-        return urls
+            yield from self._iter_page(page)
 
-    def _generate_page_urls(self, page: Page) -> list[SiteMapUrl]:
-        urls: list[SiteMapUrl] = []
+    def _iter_page(self, page: Page) -> Iterator[SiteMapUrl]:
         query_param_combinations = self._get_param_combinations(page.query_params)
-        path_param_combinations = self._get_param_combinations(page.path_params)
+        path_param_combinations: list[dict[str, str]] = self._get_param_combinations(
+            page.path_params
+        )
         for query_params, path_params in product(
             query_param_combinations, path_param_combinations
         ):
@@ -30,8 +29,7 @@ class SiteMapr:
                 if query_string
                 else f"{self._base_url}{path}"
             )
-            urls.append(SiteMapUrl(loc=loc))
-        return urls
+            yield SiteMapUrl(loc=loc)
 
     def _get_param_combinations(
         self, params: list[Param] | None

@@ -28,7 +28,7 @@ def test_sut_works():
     sitemapr = SiteMapr(base_url=base_url, pages=pages)
 
     # when
-    actuals = sitemapr.generate()
+    actuals = list(sitemapr.iter_urls())
 
     # then
     expected = [

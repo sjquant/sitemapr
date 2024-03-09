@@ -26,4 +26,4 @@ sm = SiteMapr(
     ],
 )
 
-pprint(sm.generate())
+pprint(list(sm.iter_urls()))
