@@ -10,6 +10,22 @@ class SiteMapr:
         self._base_url = base_url
         self._pages = pages
 
+    def save(self, path: str) -> None:
+        with open(path, "w") as f:
+            f.write(
+                '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+            )
+            for url in self.iter_urls():
+                f.write(f"<url><loc>{url.loc}</loc>")
+                if url.lastmod:
+                    f.write(f"<lastmod>{url.lastmod}</lastmod>")
+                if url.changefreq:
+                    f.write(f"<changefreq>{url.changefreq}</changefreq>")
+                if url.priority:
+                    f.write(f"<priority>{url.priority}</priority>")
+                f.write("</url>")
+            f.write("</urlset>")
+
     def iter_urls(self) -> Iterator[SiteMapUrl]:
         for page in self._pages:
             yield from self._iter_page(page)
