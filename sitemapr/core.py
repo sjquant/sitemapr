@@ -7,6 +7,15 @@ from sitemapr.models import Page, Param, SiteMapUrl
 
 
 class SiteMapr:
+    """
+    A class for generating and saving sitemaps.
+
+    Args:
+        base_url: The base URL of the website.
+        pages: A list of Page objects representing the pages to include in the sitemap.
+        sitemap_base_url: The base URL for the sitemap. Defaults to None, which uses the base_url.
+    """
+
     def __init__(
         self, base_url: str, pages: list[Page], *, sitemap_base_url: str | None = None
     ):
@@ -15,6 +24,13 @@ class SiteMapr:
         self._pages = pages
 
     def save(self, dirname: str, *, chunk_size: int = 50000) -> None:
+        """
+        Save the sitemap to the specified directory.
+
+        Args:
+            dirname: The directory path where the sitemap will be saved.
+            chunk_size: The number of URLs to include in each chunk. Defaults to 50000.
+        """
         chunk: list[SiteMapUrl] = []
         idx = 0
         for url in self.iter_urls():
@@ -68,6 +84,12 @@ class SiteMapr:
         f.write("</urlset>")
 
     def iter_urls(self) -> Iterator[SiteMapUrl]:
+        """
+        Iterates over the URLs in the sitemap.
+
+        Yields:
+            SiteMapUrl: A SiteMapUrl object representing a URL in the sitemap.
+        """
         for page in self._pages:
             yield from self._iter_page(page)
 
