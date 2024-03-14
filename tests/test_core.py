@@ -25,6 +25,7 @@ def test_iter_url_works():
         Page(
             path="/blog/{id}",
             path_params=[Param(name="id", values=["1", "2", "3"])],
+            changefreq="daily",
         ),
         Page(
             path="/blog/{id}/comments",
@@ -117,19 +118,19 @@ def test_iter_url_works():
         SiteMapUrl(
             loc="https://example.com/blog/1",
             lastmod=None,
-            changefreq=None,
+            changefreq="daily",
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com/blog/2",
             lastmod=None,
-            changefreq=None,
+            changefreq="daily",
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com/blog/3",
             lastmod=None,
-            changefreq=None,
+            changefreq="daily",
             priority=None,
         ),
         SiteMapUrl(

@@ -16,6 +16,9 @@ class Page(BaseModel):
     path: str
     query_params: list[Param] = []
     path_params: list[Param] = []
+    lastmod: str | None = None
+    changefreq: ChangeFreq | None = None
+    priority: float | None = None
 
 
 class SiteMapUrl(BaseModel):
