@@ -117,7 +117,7 @@ class SiteMapr:
             return [{}]
 
         combinations: list[dict[str, str]] = []
-        for values in product(*[param.values for param in params]):
+        for values in product(*[param.values for param in params if param.values]):
             combination = {
                 param.name: value for param, value in zip(params, values, strict=False)
             }

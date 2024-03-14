@@ -26,6 +26,14 @@ def test_iter_url_works():
             path="/blog/{id}",
             path_params=[Param(name="id", values=["1", "2", "3"])],
         ),
+        Page(
+            path="/blog/{id}/comments",
+            path_params=[Param(name="id", values=["1", "2"])],
+            query_params=[
+                Param(name="page", values=[]),
+                Param(name="sort", values=["asc", "desc"]),
+            ],
+        ),
     ]
     sitemapr = SiteMapr(base_url=base_url, pages=pages)
 
@@ -120,6 +128,30 @@ def test_iter_url_works():
         ),
         SiteMapUrl(
             loc="https://example.com/blog/3",
+            lastmod=None,
+            changefreq=None,
+            priority=None,
+        ),
+        SiteMapUrl(
+            loc="https://example.com/blog/1/comments?page=asc",
+            lastmod=None,
+            changefreq=None,
+            priority=None,
+        ),
+        SiteMapUrl(
+            loc="https://example.com/blog/2/comments?page=asc",
+            lastmod=None,
+            changefreq=None,
+            priority=None,
+        ),
+        SiteMapUrl(
+            loc="https://example.com/blog/1/comments?page=desc",
+            lastmod=None,
+            changefreq=None,
+            priority=None,
+        ),
+        SiteMapUrl(
+            loc="https://example.com/blog/2/comments?page=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
