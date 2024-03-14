@@ -108,7 +108,12 @@ class SiteMapr:
                 if query_string
                 else f"{self._base_url}{path}"
             )
-            yield SiteMapUrl(loc=loc)
+            yield SiteMapUrl(
+                loc=loc,
+                lastmod=page.lastmod,
+                changefreq=page.changefreq,
+                priority=page.priority,
+            )
 
     def _get_param_combinations(
         self, params: list[Param] | None
