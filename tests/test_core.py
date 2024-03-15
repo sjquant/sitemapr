@@ -44,73 +44,73 @@ def test_iter_url_works():
     # then
     expected = [
         SiteMapUrl(
-            loc="https://example.com?page=home&sort=asc",
+            loc="https://example.com?page=home&amp;sort=asc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com?page=home&sort=desc",
+            loc="https://example.com?page=home&amp;sort=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com?page=about&sort=asc",
+            loc="https://example.com?page=about&amp;sort=asc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com?page=about&sort=desc",
+            loc="https://example.com?page=about&amp;sort=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com?page=contact&sort=asc",
+            loc="https://example.com?page=contact&amp;sort=asc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com?page=contact&sort=desc",
+            loc="https://example.com?page=contact&amp;sort=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com/blog?page=1&sort=asc",
+            loc="https://example.com/blog?page=1&amp;sort=asc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com/blog?page=1&sort=desc",
+            loc="https://example.com/blog?page=1&amp;sort=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com/blog?page=2&sort=asc",
+            loc="https://example.com/blog?page=2&amp;sort=asc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com/blog?page=2&sort=desc",
+            loc="https://example.com/blog?page=2&amp;sort=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com/blog?page=3&sort=asc",
+            loc="https://example.com/blog?page=3&amp;sort=asc",
             lastmod=None,
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
-            loc="https://example.com/blog?page=3&sort=desc",
+            loc="https://example.com/blog?page=3&amp;sort=desc",
             lastmod=None,
             changefreq=None,
             priority=None,
@@ -196,7 +196,7 @@ def test_save_works(tmp_path: pathlib.Path):
         content = f.read()
         assert (
             content
-            == '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://example.com?page=home&sort=asc</loc></url><url><loc>https://example.com?page=home&sort=desc</loc></url><url><loc>https://example.com?page=about&sort=asc</loc></url><url><loc>https://example.com?page=about&sort=desc</loc></url><url><loc>https://example.com?page=contact&sort=asc</loc></url><url><loc>https://example.com?page=contact&sort=desc</loc></url><url><loc>https://example.com/blog?page=1&sort=asc</loc></url><url><loc>https://example.com/blog?page=1&sort=desc</loc></url><url><loc>https://example.com/blog?page=2&sort=asc</loc></url><url><loc>https://example.com/blog?page=2&sort=desc</loc></url><url><loc>https://example.com/blog?page=3&sort=asc</loc></url><url><loc>https://example.com/blog?page=3&sort=desc</loc></url><url><loc>https://example.com/blog/1</loc></url><url><loc>https://example.com/blog/2</loc></url><url><loc>https://example.com/blog/3</loc></url></urlset>'
+            == '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://example.com?page=home&amp;sort=asc</loc></url><url><loc>https://example.com?page=home&amp;sort=desc</loc></url><url><loc>https://example.com?page=about&amp;sort=asc</loc></url><url><loc>https://example.com?page=about&amp;sort=desc</loc></url><url><loc>https://example.com?page=contact&amp;sort=asc</loc></url><url><loc>https://example.com?page=contact&amp;sort=desc</loc></url><url><loc>https://example.com/blog?page=1&amp;sort=asc</loc></url><url><loc>https://example.com/blog?page=1&amp;sort=desc</loc></url><url><loc>https://example.com/blog?page=2&amp;sort=asc</loc></url><url><loc>https://example.com/blog?page=2&amp;sort=desc</loc></url><url><loc>https://example.com/blog?page=3&amp;sort=asc</loc></url><url><loc>https://example.com/blog?page=3&amp;sort=desc</loc></url><url><loc>https://example.com/blog/1</loc></url><url><loc>https://example.com/blog/2</loc></url><url><loc>https://example.com/blog/3</loc></url></urlset>'
         )
 
 
@@ -243,14 +243,14 @@ def test_save_works_with_multiple_chunks(tmp_path: pathlib.Path):
         content = f.read()
         assert (
             content
-            == '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://example.com?page=home&sort=asc</loc></url><url><loc>https://example.com?page=home&sort=desc</loc></url><url><loc>https://example.com?page=about&sort=asc</loc></url><url><loc>https://example.com?page=about&sort=desc</loc></url><url><loc>https://example.com?page=contact&sort=asc</loc></url><url><loc>https://example.com?page=contact&sort=desc</loc></url><url><loc>https://example.com/blog?page=1&sort=asc</loc></url><url><loc>https://example.com/blog?page=1&sort=desc</loc></url><url><loc>https://example.com/blog?page=2&sort=asc</loc></url><url><loc>https://example.com/blog?page=2&sort=desc</loc></url></urlset>'
+            == '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://example.com?page=home&amp;sort=asc</loc></url><url><loc>https://example.com?page=home&amp;sort=desc</loc></url><url><loc>https://example.com?page=about&amp;sort=asc</loc></url><url><loc>https://example.com?page=about&amp;sort=desc</loc></url><url><loc>https://example.com?page=contact&amp;sort=asc</loc></url><url><loc>https://example.com?page=contact&amp;sort=desc</loc></url><url><loc>https://example.com/blog?page=1&amp;sort=asc</loc></url><url><loc>https://example.com/blog?page=1&amp;sort=desc</loc></url><url><loc>https://example.com/blog?page=2&amp;sort=asc</loc></url><url><loc>https://example.com/blog?page=2&amp;sort=desc</loc></url></urlset>'
         )
 
     with open(f"{dirname}/sitemap-1.xml") as f:
         content = f.read()
         assert (
             content
-            == '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://example.com/blog?page=3&sort=asc</loc></url><url><loc>https://example.com/blog?page=3&sort=desc</loc></url><url><loc>https://example.com/blog/1</loc></url><url><loc>https://example.com/blog/2</loc></url><url><loc>https://example.com/blog/3</loc></url></urlset>'
+            == '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://example.com/blog?page=3&amp;sort=asc</loc></url><url><loc>https://example.com/blog?page=3&amp;sort=desc</loc></url><url><loc>https://example.com/blog/1</loc></url><url><loc>https://example.com/blog/2</loc></url><url><loc>https://example.com/blog/3</loc></url></urlset>'
         )
 
 

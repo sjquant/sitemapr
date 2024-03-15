@@ -102,7 +102,7 @@ class SiteMapr:
             query_param_combinations, path_param_combinations
         ):
             path = page.path.format(**path_params)
-            query_string = urlencode(query_params)
+            query_string = urlencode(query_params).replace('&', '&amp;')
             loc = (
                 f"{self._base_url}{path}?{query_string}"
                 if query_string
