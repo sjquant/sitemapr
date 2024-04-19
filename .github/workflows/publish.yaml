@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: "3.10"
 
       - name: Install Poetry
         run: |
@@ -54,7 +54,7 @@ jobs:
         with:
           tag_name: ${{ steps.version_check.outputs.new_version }}
           generate_release_notes: True
-      
+
       - name: mint API token
         id: mint-token
         run: |
