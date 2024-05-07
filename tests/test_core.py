@@ -14,6 +14,7 @@ def test_iter_url_works():
                 Param(name="page", values=["home", "about", "contact"]),
                 Param(name="sort", values=["asc", "desc"]),
             ],
+            lastmod="2021-01-01T00:00:00+00:00",
         ),
         Page(
             path="/blog",
@@ -21,11 +22,17 @@ def test_iter_url_works():
                 Param(name="page", values=["1", "2", "3"]),
                 Param(name="sort", values=["asc", "desc"]),
             ],
+            lastmod=lambda _loc, _page_params, query_params: (
+                "2021-01-02T00:00:00+00:00" if query_params["page"] == "1" else None
+            ),
         ),
         Page(
             path="/blog/{id}",
             path_params=[Param(name="id", values=["1", "2", "3"])],
             changefreq="daily",
+            priority=lambda _loc, path_params, _query_params: (
+                "1.0" if path_params["id"] == "1" else "0.7"
+            ),
         ),
         Page(
             path="/blog/{id}/comments",
@@ -45,49 +52,49 @@ def test_iter_url_works():
     expected = [
         SiteMapUrl(
             loc="https://example.com?page=home&amp;sort=asc",
-            lastmod=None,
+            lastmod="2021-01-01T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com?page=home&amp;sort=desc",
-            lastmod=None,
+            lastmod="2021-01-01T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com?page=about&amp;sort=asc",
-            lastmod=None,
+            lastmod="2021-01-01T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com?page=about&amp;sort=desc",
-            lastmod=None,
+            lastmod="2021-01-01T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com?page=contact&amp;sort=asc",
-            lastmod=None,
+            lastmod="2021-01-01T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com?page=contact&amp;sort=desc",
-            lastmod=None,
+            lastmod="2021-01-01T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com/blog?page=1&amp;sort=asc",
-            lastmod=None,
+            lastmod="2021-01-02T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
         SiteMapUrl(
             loc="https://example.com/blog?page=1&amp;sort=desc",
-            lastmod=None,
+            lastmod="2021-01-02T00:00:00+00:00",
             changefreq=None,
             priority=None,
         ),
@@ -119,19 +126,19 @@ def test_iter_url_works():
             loc="https://example.com/blog/1",
             lastmod=None,
             changefreq="daily",
-            priority=None,
+            priority="1.0",
         ),
         SiteMapUrl(
             loc="https://example.com/blog/2",
             lastmod=None,
             changefreq="daily",
-            priority=None,
+            priority="0.7",
         ),
         SiteMapUrl(
             loc="https://example.com/blog/3",
             lastmod=None,
             changefreq="daily",
-            priority=None,
+            priority="0.7",
         ),
         SiteMapUrl(
             loc="https://example.com/blog/1/comments?page=asc",

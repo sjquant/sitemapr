@@ -102,17 +102,36 @@ class SiteMapr:
             query_param_combinations, path_param_combinations
         ):
             path = page.path.format(**path_params)
-            query_string = urlencode(query_params).replace('&', '&amp;')
+            query_string = urlencode(query_params).replace("&", "&amp;")
             loc = (
                 f"{self._base_url}{path}?{query_string}"
                 if query_string
                 else f"{self._base_url}{path}"
             )
+
+            lastmod = (
+                page.lastmod(loc, path_params, query_params)
+                if callable(page.lastmod)
+                else page.lastmod
+            )
+
+            changefreq = (
+                page.changefreq(loc, path_params, query_params)
+                if callable(page.changefreq)
+                else page.changefreq
+            )
+
+            priority = (
+                page.priority(loc, path_params, query_params)
+                if callable(page.priority)
+                else page.priority
+            )
+
             yield SiteMapUrl(
                 loc=loc,
-                lastmod=page.lastmod,
-                changefreq=page.changefreq,
-                priority=page.priority,
+                lastmod=lastmod,
+                changefreq=changefreq,
+                priority=priority,
             )
 
     def _get_param_combinations(

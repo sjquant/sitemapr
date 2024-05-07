@@ -41,6 +41,7 @@ pages = [
             Param(name="page", values=["home", "about", "contact"]),
             Param(name="sort", values=["asc", "desc"]),
         ],
+        priority="1.0",
     ),
     Page(
         path="/blog",
@@ -48,6 +49,8 @@ pages = [
             Param(name="page", values=["1", "2", "3"]),
             Param(name="sort", values=["asc", "desc"]),
         ],
+        # For lastmod, priority, and changefreq field, you can use callback function for more precise control
+        lastmod=lambda loc, path_params, query_params: "2024-05-07T00:00:00+00"
     ),
     Page(
         path="/blog/{id}",
