@@ -16,9 +16,7 @@ class SiteMapr:
         sitemap_base_url: The base URL for the sitemap. Defaults to None, which uses the base_url.
     """
 
-    def __init__(
-        self, base_url: str, pages: list[Page], *, sitemap_base_url: str | None = None
-    ):
+    def __init__(self, base_url: str, pages: list[Page], *, sitemap_base_url: str | None = None):
         self._base_url = base_url
         self._sitemap_base_url = sitemap_base_url or base_url
         self._pages = pages
@@ -63,9 +61,7 @@ class SiteMapr:
                 '<?xml version="1.0" encoding="UTF-8"?><sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
             )
             for i in range(idx + 1):
-                f.write(
-                    f"<sitemap><loc>{self._sitemap_base_url}/sitemap-{i}.xml</loc></sitemap>"
-                )
+                f.write(f"<sitemap><loc>{self._sitemap_base_url}/sitemap-{i}.xml</loc></sitemap>")
             f.write("</sitemapindex>")
 
     def _write_urls(self, f: TextIOWrapper, urls: list[SiteMapUrl]):
@@ -98,9 +94,7 @@ class SiteMapr:
         path_param_combinations: list[dict[str, str]] = self._get_param_combinations(
             page.path_params
         )
-        for query_params, path_params in product(
-            query_param_combinations, path_param_combinations
-        ):
+        for query_params, path_params in product(query_param_combinations, path_param_combinations):
             path = page.path.format(**path_params)
             query_string = urlencode(query_params).replace("&", "&amp;")
             loc = (
@@ -134,16 +128,12 @@ class SiteMapr:
                 priority=priority,
             )
 
-    def _get_param_combinations(
-        self, params: list[Param] | None
-    ) -> list[dict[str, str]]:
+    def _get_param_combinations(self, params: list[Param] | None) -> list[dict[str, str]]:
         if not params:
             return [{}]
 
         combinations: list[dict[str, str]] = []
         for values in product(*[param.values for param in params if param.values]):
-            combination = {
-                param.name: value for param, value in zip(params, values, strict=False)
-            }
+            combination = {param.name: value for param, value in zip(params, values, strict=False)}
             combinations.append(combination)
         return combinations

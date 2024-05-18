@@ -5,9 +5,7 @@ from pydantic import BaseModel
 
 T = TypeVar("T")
 
-ChangeFreq = Literal[
-    "always", "hourly", "daily", "weekly", "monthly", "yearly", "never"
-]
+ChangeFreq = Literal["always", "hourly", "daily", "weekly", "monthly", "yearly", "never"]
 
 CallbackFn = Callable[[str, dict[str, str], dict[str, str]], T | None]
 
