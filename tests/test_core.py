@@ -1,5 +1,8 @@
 import pathlib
 
+import pytest
+from pydantic import ValidationError
+
 from sitemapr import Page, Param, SiteMapr, SiteMapUrl
 
 
@@ -166,6 +169,29 @@ def test_iter_url_works():
         ),
     ]
     assert actuals == expected
+
+
+def test_iter_url_raises_error_when_priority_is_invalid():
+    """iter_url should raise an error when priority is invalid."""
+    # given
+    invalid_priority = "1.1"
+
+    base_url = "https://example.com"
+    pages = [
+        Page(
+            path="",
+            query_params=[
+                Param(name="page", values=["home", "about", "contact"]),
+                Param(name="sort", values=["asc", "desc"]),
+            ],
+            priority=invalid_priority,
+        ),
+    ]
+    sitemapr = SiteMapr(base_url=base_url, pages=pages)
+
+    # when, then
+    with pytest.raises(ValidationError):
+        list(sitemapr.iter_urls())
 
 
 def test_save_works(tmp_path: pathlib.Path):
