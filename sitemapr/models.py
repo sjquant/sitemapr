@@ -2,9 +2,7 @@ from collections.abc import Callable
 from decimal import Decimal
 from typing import Literal, TypeVar
 
-from pydantic import BaseModel, validator
-
-from sitemapr.exceptions import InvalidSiteMapPriority
+from pydantic import BaseModel, ValidationError, validator
 
 T = TypeVar("T")
 
@@ -41,9 +39,9 @@ class SiteMapUrl(BaseModel):
         try:
             priority = Decimal(v)
         except Exception as e:
-            raise InvalidSiteMapPriority(v) from e
+            raise ValidationError(v) from e
 
         if 0 <= priority <= 1:
             return f"{priority:.1f}"
 
-        raise InvalidSiteMapPriority(v)
+        raise ValidationError(v)

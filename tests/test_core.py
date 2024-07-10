@@ -1,9 +1,9 @@
 import pathlib
 
 import pytest
+from pydantic import ValidationError
 
 from sitemapr import Page, Param, SiteMapr, SiteMapUrl
-from sitemapr.exceptions import InvalidSiteMapPriority
 
 
 def test_iter_url_works():
@@ -190,7 +190,7 @@ def test_iter_url_raises_error_when_priority_is_invalid():
     sitemapr = SiteMapr(base_url=base_url, pages=pages)
 
     # when, then
-    with pytest.raises(InvalidSiteMapPriority):
+    with pytest.raises(ValidationError):
         list(sitemapr.iter_urls())
 
 
