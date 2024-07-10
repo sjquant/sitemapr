@@ -39,9 +39,11 @@ class SiteMapUrl(BaseModel):
         try:
             priority = Decimal(v)
         except Exception as e:
-            raise ValidationError(v) from e
+            raise ValidationError(
+                "Priority must be a valid decimal string between 0.0 and 1.0"
+            ) from e
 
         if 0 <= priority <= 1:
             return f"{priority:.1f}"
 
-        raise ValidationError(v)
+        raise ValidationError("Priority must be between 0.0 and 1.0")
