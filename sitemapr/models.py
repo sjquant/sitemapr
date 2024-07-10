@@ -1,7 +1,10 @@
 from collections.abc import Callable
+from decimal import Decimal
 from typing import Literal, TypeVar
 
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
+
+from sitemapr.exceptions import InvalidSiteMapPriority
 
 T = TypeVar("T")
 
@@ -30,3 +33,17 @@ class SiteMapUrl(BaseModel):
     lastmod: str | None = None
     changefreq: ChangeFreq | None = None  # Google ignores this
     priority: str | None = None  # Google ignores this
+
+    @validator("priority")
+    def validate_priority(cls, v: str | None) -> str | None:
+        if v is None:
+            return v
+        try:
+            priority = Decimal(v)
+        except Exception as e:
+            raise InvalidSiteMapPriority(v) from e
+
+        if 0 <= priority <= 1:
+            return f"{priority:.1f}"
+
+        raise InvalidSiteMapPriority(v)
